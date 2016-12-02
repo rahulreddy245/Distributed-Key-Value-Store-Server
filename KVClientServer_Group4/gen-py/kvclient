@@ -1,0 +1,124 @@
+#!/usr/bin/python
+'''
+Group Number: 4
+
+#kvclient.py;
+
+TeamMembers:
+Rahul Reddy (rra304)
+Suraj Patel (skp392)
+Jubin Soni  (jas1464)
+Balaji Reddy(bbr234)
+'''
+
+import sys
+import subprocess
+sys.path.append('gen-py')
+import socket, kvserver
+from kvstore import KVStore
+from kvstore.ttypes import ErrorCode
+from thrift import Thrift
+from thrift.transport import TSocket
+from thrift.transport import TTransport
+from thrift.protocol import TBinaryProtocol
+host = socket.gethostname()
+
+class kvclient():
+    def __init__(self, kvcConnectingHost):
+        # Make Socket
+        kvcServerAddr, kvcServerPort = kvcConnectingHost.split(":")
+        self.transport = TSocket.TSocket(kvcServerAddr, int(kvcServerPort))
+
+        # Buffering
+        self.transport = TTransport.TBufferedTransport(self.transport)
+
+        # Wrap in protocol
+        protocol = TBinaryProtocol.TBinaryProtocol(self.transport)
+
+        # Create client
+        self.client = KVStore.Client(protocol)
+
+        # Connect!
+        self.transport.open()
+        print "Connected to server: {0}".format(str(kvcConnectingHost))
+
+    def set(self, key, value):
+        try:
+            setResult = self.client.kvset(key, value)
+            if setResult.error == ErrorCode.kSuccess:
+                print ("Key: %s Value: %s, successfully stored" % (key, value))
+                sys.exit(setResult.error) #exitCode
+            else:
+                sys.stderr.write("Set Error: "+setResult.errortext) #errorText
+                sys.exit(setResult.error)#exitCode
+        except ErrorCode as errortext:
+            sys.stderr.write("Set Error: "+str(errortext)) #errorText
+            sys.exit(setResult.error)#exitCode
+
+    def get(self, key):
+        try:
+            getResult = self.client.kvget(key)
+            if getResult.error == ErrorCode.kSuccess:
+                print ("Key: {1} Value: {0}, successfully retrieved".format(getResult.value, key))
+                sys.exit(getResult.error)
+            else:
+                sys.stderr.write("Get Error: "+getResult.errortext) #errorText
+                sys.exit(getResult.error) #exitCode
+        except ErrorCode as errortext:
+            sys.stderr.write("Set Error: "+str(errortext)) #errorText
+            sys.exit(getResult.error) #exitCode
+
+    def delete(self, key):
+        try:
+            delResult = self.client.kvdelete(key)
+            if delResult.error == ErrorCode.kSuccess:
+                print ("Key: %s, successfully deleted" % key)
+                sys.exit(delResult.error) #erroText
+            else:
+                sys.stderr.write("Delete Error: "+delResult.errortext) #errorText
+                sys.exit(delResult.error) #exitCode
+        except ErrorCode as errortext:
+            sys.stderr.write("Set Error: "+str(errortext)) #errorText
+            sys.exit(delResult.error) #exitCode
+
+    def __del__(self):
+        self.transport.close()
+
+def usage():
+    print ("Correct usage: kvclient -server host:port -<remote method> 'my_key' 'my_value'")
+
+def main(argv):
+    # parsing command line arguments
+    err=2
+    if argv[0] != "-server":
+        usage()
+        sys.exit(err)
+    if argv[2] not in ["-get", "-set", "-del"]:
+        usage()
+        exit(err)
+
+    if (argv[2] == "-set" and len(argv) == 5):
+        kvcKey = argv[3]
+        kvcVal = argv[4]
+    elif ((argv[2] == "-get" or argv[2] == "-del") and len(argv) == 4):
+        kvcKey = argv[3]
+    else:
+        usage()
+        sys.exit(err)
+
+    kvcConnectingHost = argv[1]
+    kvc = kvclient(kvcConnectingHost)
+
+    if (argv[2] == "-get"):
+        kvc.get(kvcKey)
+    elif (argv[2] == "-set"):
+        kvc.set(kvcKey, kvcVal)
+    elif (argv[2] == "-del"):
+        kvc.delete(kvcKey)
+
+if __name__ == "__main__":
+    try:
+        main(sys.argv[1:])
+    except Exception as e:
+        sys.stderr.write("Error: "+str(e))
+        sys.exit(2)
