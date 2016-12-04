@@ -14,17 +14,33 @@ Balaji Reddy(bbr234)
 import sys
 import subprocess
 sys.path.append('gen-py')
-import socket, kvserver
+import socket, kvserver, kvSequencer
+from kvSequencer import SequenceService
 from kvstore import KVStore
 from kvstore.ttypes import ErrorCode
 from thrift import Thrift
 from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
+import multiprocessing
+import threading, sys, os
+import time
+import random
+from kvsequenceclient import KVSequenceClient
+
 host = socket.gethostname()
 
 class kvclient():
     def __init__(self, kvcConnectingHost):
+        #Sequence variable to used for value
+
+        #Key value on which the project is run
+        self.key = 'DS:'
+
+        #lock so that the sequence is incremented and assigned atomically
+        self.lock = threading.Lock()
+
+        #Connect to the Key Value Store at the address mentioned in the command prompt
         # Make Socket
         kvcServerAddr, kvcServerPort = kvcConnectingHost.split(":")
         self.transport = TSocket.TSocket(kvcServerAddr, int(kvcServerPort))
@@ -42,50 +58,76 @@ class kvclient():
         self.transport.open()
         print "Connected to server: {0}".format(str(kvcConnectingHost))
 
+        self.sequenceClient = KVSequenceClient('localhost:10100')
+
     def set(self, key, value):
         try:
             setResult = self.client.kvset(key, value)
             if setResult.error == ErrorCode.kSuccess:
                 print ("Key: %s Value: %s, successfully stored" % (key, value))
-                sys.exit(setResult.error) #exitCode
+                #sys.exit(setResult.error) #exitCode
             else:
                 sys.stderr.write("Set Error: "+setResult.errortext) #errorText
-                sys.exit(setResult.error)#exitCode
+                #sys.exit(setResult.error)#exitCode
         except ErrorCode as errortext:
             sys.stderr.write("Set Error: "+str(errortext)) #errorText
-            sys.exit(setResult.error)#exitCode
+            #sys.exit(setResult.error)#exitCode
 
     def get(self, key):
         try:
             getResult = self.client.kvget(key)
             if getResult.error == ErrorCode.kSuccess:
                 print ("Key: {1} Value: {0}, successfully retrieved".format(getResult.value, key))
-                sys.exit(getResult.error)
+                #sys.exit(getResult.error)
             else:
-                sys.stderr.write("Get Error: "+getResult.errortext) #errorText
-                sys.exit(getResult.error) #exitCode
+                sys.stderr.write("Get Error: "+str(getResult.errortext)) #errorText
+                #sys.exit(getResult.error) #exitCode
         except ErrorCode as errortext:
             sys.stderr.write("Set Error: "+str(errortext)) #errorText
-            sys.exit(getResult.error) #exitCode
+            #sys.exit(getResult.error) #exitCode
+
 
     def delete(self, key):
         try:
             delResult = self.client.kvdelete(key)
             if delResult.error == ErrorCode.kSuccess:
                 print ("Key: %s, successfully deleted" % key)
-                sys.exit(delResult.error) #erroText
+                #sys.exit(delResult.error) #erroText
             else:
                 sys.stderr.write("Delete Error: "+delResult.errortext) #errorText
-                sys.exit(delResult.error) #exitCode
+                #sys.exit(delResult.error) #exitCode
         except ErrorCode as errortext:
             sys.stderr.write("Set Error: "+str(errortext)) #errorText
-            sys.exit(delResult.error) #exitCode
+            #sys.exit(delResult.error) #exitCode
+
+    def worker(self):
+        seq = '00000000000000000'
+        # print ("inside worker")
+        while (1):
+            temp = self.sequenceClient.get()
+            print ("inside while worker:%d"% (temp))
+            opcode = random.randint(0, 1)
+            if (opcode == 0):
+                # with self.lock:
+                self.set(self.key, seq)
+                seq = str(int(seq) + 1)
+            else:
+                self.get(self.key)
+            temp = self.sequenceClient.get()
+            print ("inside while worker:%d" %(temp))
 
     def __del__(self):
         self.transport.close()
 
 def usage():
-    print ("Correct usage: kvclient -server host:port -<remote method> 'my_key' 'my_value'")
+    print ("Correct usage: kvclient -server host:port -<remote method> ")
+
+
+
+def killer():
+    """Killer thread"""
+    time.sleep(20)
+    os._exit(1)
 
 def main(argv):
     # parsing command line arguments
@@ -93,28 +135,34 @@ def main(argv):
     if argv[0] != "-server":
         usage()
         sys.exit(err)
-    if argv[2] not in ["-get", "-set", "-del"]:
-        usage()
-        exit(err)
-
-    if (argv[2] == "-set" and len(argv) == 5):
-        kvcKey = argv[3]
-        kvcVal = argv[4]
-    elif ((argv[2] == "-get" or argv[2] == "-del") and len(argv) == 4):
-        kvcKey = argv[3]
-    else:
+    if argv.__len__()!=2:
         usage()
         sys.exit(err)
 
     kvcConnectingHost = argv[1]
-    kvc = kvclient(kvcConnectingHost)
 
-    if (argv[2] == "-get"):
-        kvc.get(kvcKey)
-    elif (argv[2] == "-set"):
-        kvc.set(kvcKey, kvcVal)
-    elif (argv[2] == "-del"):
-        kvc.delete(kvcKey)
+    kvclientarray = []
+    for i in range(1):
+        kvc = kvclient(kvcConnectingHost)
+        kvc.set(kvc.key,"RahulStart")
+        kvclientarray.append(kvc)
+
+    k = threading.Thread(target=killer)
+    k.start()
+
+    threads = []
+    for i in range(1):
+       t = threading.Thread(target=kvclientarray[i].worker)
+       threads.append(t)
+       t.start()
+    """
+    threads = []
+    for i in range(5):
+       t = threading.Thread(target= worker,args=(kvc,))
+       threads.append(t)
+       t.start()
+    """
+
 
 if __name__ == "__main__":
     try:
