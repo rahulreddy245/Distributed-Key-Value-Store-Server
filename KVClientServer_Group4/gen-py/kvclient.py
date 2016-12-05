@@ -104,8 +104,8 @@ class kvclient():
         seq = '00000000000000000'
         # print ("inside worker")
         while (1):
-            temp = self.sequenceClient.get()
-            print ("inside while worker:%d"% (temp))
+            seqstart = self.sequenceClient.get()
+            print ("inside while worker:%d"% (seqstart))
             opcode = random.randint(0, 1)
             if (opcode == 0):
                 # with self.lock:
@@ -113,8 +113,16 @@ class kvclient():
                 seq = str(int(seq) + 1)
             else:
                 self.get(self.key)
-            temp = self.sequenceClient.get()
-            print ("inside while worker:%d" %(temp))
+            seqend = self.sequenceClient.get()
+            print ("inside while worker:%d" %(seqend))
+
+            self.lock.acquire(True)
+            f = open("log.txt", 'a')
+
+            # Writing sequence start and end numbers, opcode and value set/retrieved. Could change opcode with string "S" and "G" if needed.
+            f.write(str(seqstart) + "," + str(opcode) + "," + seq + "," + str(seqend) + "\n")
+            f.close()
+            self.lock.release()
 
     def __del__(self):
         self.transport.close()
