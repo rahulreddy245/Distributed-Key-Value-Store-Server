@@ -78,6 +78,7 @@ class kvclient():
             getResult = self.client.kvget(key)
             if getResult.error == ErrorCode.kSuccess:
                 print ("Key: {1} Value: {0}, successfully retrieved".format(getResult.value, key))
+                return getResult.value
                 #sys.exit(getResult.error)
             else:
                 sys.stderr.write("Get Error: "+str(getResult.errortext)) #errorText
@@ -101,26 +102,27 @@ class kvclient():
             #sys.exit(delResult.error) #exitCode
 
     def worker(self):
-        seq = '00000000000000000'
+        #seq = '00000000000000000'
         # print ("inside worker")
         while (1):
             seqstart = self.sequenceClient.get()
-            print ("inside while worker:%d"% (seqstart))
+            #print ("inside while worker:%d"% (seqstart))
             opcode = random.randint(0, 1)
             if (opcode == 0):
+                seq = str(seqstart + 1)
                 # with self.lock:
                 self.set(self.key, seq)
-                seq = str(int(seq) + 1)
             else:
-                self.get(self.key)
+                seq = self.get(self.key)
             seqend = self.sequenceClient.get()
-            print ("inside while worker:%d" %(seqend))
+            #print ("inside while worker:%d" %(seqend))
 
             self.lock.acquire(True)
             f = open("log.txt", 'a')
 
             # Writing sequence start and end numbers, opcode and value set/retrieved. Could change opcode with string "S" and "G" if needed.
-            f.write(str(seqstart) + "," + str(opcode) + "," + seq + "," + str(seqend) + "\n")
+            if (seq != None):
+                f.write(str(seqstart) + "," + str(opcode) + "," + str(seq) + "," + str(seqend) + "\n")
             f.close()
             self.lock.release()
 
@@ -134,10 +136,14 @@ def usage():
 
 def killer():
     """Killer thread"""
-    time.sleep(20)
+    time.sleep(10)
     os._exit(1)
 
 def main(argv):
+    #delete log.txt if present
+    if(os.path.isfile("log.txt")):
+        os.remove("log.txt")
+
     # parsing command line arguments
     err=2
     if argv[0] != "-server":
@@ -148,18 +154,19 @@ def main(argv):
         sys.exit(err)
 
     kvcConnectingHost = argv[1]
+    numClients = 2
 
     kvclientarray = []
-    for i in range(1):
+    for i in range(numClients):
         kvc = kvclient(kvcConnectingHost)
-        kvc.set(kvc.key,"RahulStart")
+        kvc.set(kvc.key,'00000000000000000')
         kvclientarray.append(kvc)
 
     k = threading.Thread(target=killer)
     k.start()
 
     threads = []
-    for i in range(1):
+    for i in range(numClients):
        t = threading.Thread(target=kvclientarray[i].worker)
        threads.append(t)
        t.start()
