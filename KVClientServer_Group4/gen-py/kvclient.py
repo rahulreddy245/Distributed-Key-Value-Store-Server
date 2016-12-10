@@ -33,6 +33,9 @@ host = socket.gethostname()
 class kvclient():
     def __init__(self, kvcConnectingHost):
         #Sequence variable to used for value
+        self.seqstart = 0
+        self.seqend = 0
+        self.seq = 0
 
         #Key value on which the project is run
         self.key = 'DS:'
@@ -102,27 +105,26 @@ class kvclient():
             #sys.exit(delResult.error) #exitCode
 
     def worker(self):
-        #seq = '00000000000000000'
         # print ("inside worker")
         while (1):
-            seqstart = self.sequenceClient.get()
+            self.seqstart = self.sequenceClient.get()
             #print ("inside while worker:%d"% (seqstart))
             opcode = random.randint(0, 1)
             if (opcode == 0):
-                seq = str(seqstart + 1)
+                self.seq = str(self.seqstart + 1)
                 # with self.lock:
-                self.set(self.key, seq)
+                self.set(self.key, self.seq)
             else:
-                seq = self.get(self.key)
-            seqend = self.sequenceClient.get()
+                self.seq = self.get(self.key)
+            self.seqend = self.sequenceClient.get()
             #print ("inside while worker:%d" %(seqend))
 
             self.lock.acquire(True)
             f = open("log.txt", 'a')
 
             # Writing sequence start and end numbers, opcode and value set/retrieved. Could change opcode with string "S" and "G" if needed.
-            if (seq != None):
-                f.write(str(seqstart) + "," + str(opcode) + "," + str(seq) + "," + str(seqend) + "\n")
+            #if (self.seq != None):
+            f.write(str(self.seqstart) + "," + str(opcode) + "," + str(self.seq) + "," + str(self.seqend) + "\n")
             f.close()
             self.lock.release()
 
@@ -136,7 +138,7 @@ def usage():
 
 def killer():
     """Killer thread"""
-    time.sleep(1)
+    time.sleep(2)
     os._exit(1)
 
 def main(argv):
@@ -154,7 +156,7 @@ def main(argv):
         sys.exit(err)
 
     kvcConnectingHost = argv[1]
-    numClients = 2
+    numClients = 6
 
     kvclientarray = []
     for i in range(numClients):
