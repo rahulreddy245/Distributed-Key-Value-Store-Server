@@ -26,7 +26,7 @@
       <file leaf-file-name="kvserver.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/kvserver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
+            <state relative-caret-position="1056">
               <caret line="48" column="28" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
               <folding />
             </state>
@@ -36,8 +36,8 @@
       <file leaf-file-name="kvsequenceserver.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/kvsequenceserver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+            <state relative-caret-position="300">
+              <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -46,14 +46,33 @@
       <file leaf-file-name="kvclient.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/kvclient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="144" column="28" selection-start-line="144" selection-start-column="28" selection-end-line="144" selection-end-column="28" />
+            <state relative-caret-position="371">
+              <caret line="112" column="33" selection-start-line="112" selection-start-column="33" selection-end-line="112" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="checker.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/checker.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="343">
+              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -62,6 +81,7 @@
         <option value="$PROJECT_DIR$/kvserver.py" />
         <option value="$PROJECT_DIR$/kvsequenceserver.py" />
         <option value="$PROJECT_DIR$/kvclient.py" />
+        <option value="$PROJECT_DIR$/checker.py" />
       </list>
     </option>
   </component>
@@ -131,7 +151,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
-  <component name="RunManager" selected="Python.kvclient">
+  <component name="RunManager" selected="Python.checker">
     <configuration default="false" name="kvserver" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -183,6 +203,24 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/kvclient.py" />
       <option name="PARAMETERS" value="-server localhost:9090" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="checker" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="gen-py" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/checker.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
@@ -349,17 +387,19 @@
       <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python tests.Nosetests in gen-py" />
       <item index="1" class="java.lang.String" itemvalue="Python.kvserver" />
       <item index="2" class="java.lang.String" itemvalue="Python.kvsequenceserver" />
       <item index="3" class="java.lang.String" itemvalue="Python.kvclient" />
+      <item index="4" class="java.lang.String" itemvalue="Python.checker" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Python.kvclient" />
-        <item index="1" class="java.lang.String" itemvalue="Python.kvsequenceserver" />
-        <item index="2" class="java.lang.String" itemvalue="Python.kvserver" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python.checker" />
+        <item index="1" class="java.lang.String" itemvalue="Python.kvclient" />
+        <item index="2" class="java.lang.String" itemvalue="Python.kvsequenceserver" />
+        <item index="3" class="java.lang.String" itemvalue="Python.kvserver" />
       </list>
     </recent_temporary>
   </component>
@@ -437,7 +477,7 @@
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="3" />
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -543,7 +583,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/kvserver.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
+        <state relative-caret-position="1056">
           <caret line="48" column="28" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
           <folding />
         </state>
@@ -551,16 +591,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/kvsequenceserver.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+        <state relative-caret-position="300">
+          <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/checker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/kvclient.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="144" column="28" selection-start-line="144" selection-start-column="28" selection-end-line="144" selection-end-column="28" />
+        <state relative-caret-position="371">
+          <caret line="112" column="33" selection-start-line="112" selection-start-column="33" selection-end-line="112" selection-end-column="33" />
           <folding />
         </state>
       </provider>

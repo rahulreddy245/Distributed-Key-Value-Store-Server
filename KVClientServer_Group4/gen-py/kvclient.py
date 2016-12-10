@@ -136,7 +136,7 @@ def usage():
 
 def killer():
     """Killer thread"""
-    time.sleep(10)
+    time.sleep(1)
     os._exit(1)
 
 def main(argv):
@@ -159,7 +159,7 @@ def main(argv):
     kvclientarray = []
     for i in range(numClients):
         kvc = kvclient(kvcConnectingHost)
-        kvc.set(kvc.key,'00000000000000000')
+        kvc.set(kvc.key,'0')
         kvclientarray.append(kvc)
 
     k = threading.Thread(target=killer)
