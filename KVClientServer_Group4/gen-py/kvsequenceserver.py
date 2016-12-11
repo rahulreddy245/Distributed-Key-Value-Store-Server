@@ -14,7 +14,6 @@ import sys
 sys.path.append('gen-py')
 import socket
 import threading
-from thrift import Thrift
 from kvSequencer import SequenceService
 from thrift.transport import TSocket
 from thrift.transport import TTransport
@@ -28,7 +27,7 @@ class kvsequence:
     lock = threading.Lock()
 
     def getnextsequenceid(self):
-        print("service request came")
+        # print("service request came")
         with self.lock:
             self.result = self.currentsequence
             self.currentsequence += 1
