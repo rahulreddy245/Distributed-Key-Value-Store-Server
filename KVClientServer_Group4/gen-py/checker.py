@@ -1,6 +1,6 @@
 import networkx as nx
 import time
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import sys
 
 
@@ -20,6 +20,9 @@ seqStartList = []
 readop = {}
 # WriteOP dict
 writeop = {}
+# seemingly out of order reads
+outoforderreads = []
+
 
 def pathexists(G,source,target):
     #print("checking for path")
@@ -32,7 +35,10 @@ def pathexists(G,source,target):
 def main(argv):
 
     for line in FILE:
-        seqStart, opcode, value, seqStop = line.split(",")
+        try:
+            seqStart, opcode, value, seqStop = line.split(",")
+        except:
+            pass
         seqStart = int(seqStart)
         opcode = int(opcode)
         value = int(value)
@@ -45,27 +51,53 @@ def main(argv):
             DG.add_node(nodestruct)
             writeop[nodestruct] = value
         if opcode == 1:
-            seqStartList.append((seqStart, "R"))
-            nodestruct = 'R:{0}'.format(str(seqStart))
-            DG.add_node(nodestruct)
-            readop[nodestruct] = value
             # We add the edge as and when there is a read
             # to its the write from which this value was written
             if value in valueDict.keys():
+
                 tempseqstart = valueDict[value][0]
                 edgestart = 'W:{0}'.format(str(tempseqstart))
                 if DG.has_node(edgestart):
+                    nodestruct = 'R:{0}'.format(str(seqStart))
+
+                    seqStartList.append((seqStart, "R"))
+                    readop[nodestruct] = value
+
+                    DG.add_node(nodestruct)
                     DG.add_edge(edgestart, nodestruct)
                 else:
                     print("Something wrong!")
             else:
                 if value ==0:
                     continue
-                print("Failing because of :"+str(value))
+                outoforderreads.append(line)
                 #exit(1)
                 continue
-            # You have to process hybrid Edges here
-            #
+
+    # we caught the seemingly out of order entries from the log above
+    # We process them now as the concurrent writes would have been taken care
+    # So they pose no problem
+    for line in outoforderreads:
+        if value in valueDict.keys():
+
+            tempseqstart = valueDict[value][0]
+            edgestart = 'W:{0}'.format(str(tempseqstart))
+            if DG.has_node(edgestart):
+                nodestruct = 'R:{0}'.format(str(seqStart))
+
+                seqStartList.append((seqStart, "R"))
+                readop[nodestruct] = value
+
+                DG.add_node(nodestruct)
+                DG.add_edge(edgestart, nodestruct)
+            else:
+                print("Something wrong!")
+        else:
+            if value == 0:
+                continue
+            print("Failing because of :" + str(value))
+            # exit(1)
+            continue
 
     seqStartList.sort()
 
@@ -94,26 +126,25 @@ def main(argv):
             for i in range(wstart+1, rstart):
                 e = "W:{0}".format(i)
                 if e in writeop:
-                    #print(rstart, wstart, e)
                     if pathexists(DG, e, r):
                         print("this works")
                         print (wstart, rstart, e)
                         #get value from the readop edge
                         #value = readop[r]
 
-                        #if value in valueDict.keys():
-                        print("Hybrid")
-                        tempseqstart = valueDict[value][0]
-                        edgestart = 'W:{0}'.format(str(tempseqstart))
-                        if DG.has_node(edgestart):
-                            DG.add_edge(e,edgestart)
+                        if value in valueDict.keys():
+                            print("Hybrid")
+                            tempseqstart = valueDict[value][0]
+                            edgestart = 'W:{0}'.format(str(tempseqstart))
+                            if DG.has_node(edgestart):
+                                DG.add_edge(e,edgestart)
 
     print(list(nx.simple_cycles(DG)))
     print (DG.number_of_edges())
 
 #    print (len(writeop)+len(readop))
-    #nx.draw(DG)
-    #plt.show()
+    nx.draw(DG)
+    plt.show()
 
 if __name__ == "__main__":
     try:
@@ -124,5 +155,5 @@ if __name__ == "__main__":
     except Exception as e:
         sys.stderr.write("Error: "+str(e))
         print(e)
+        pass
         sys.exit(2)
-

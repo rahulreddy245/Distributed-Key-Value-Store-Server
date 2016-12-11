@@ -90,7 +90,6 @@ class kvclient():
             sys.stderr.write("Set Error: "+str(errortext)) #errorText
             #sys.exit(getResult.error) #exitCode
 
-
     def delete(self, key):
         try:
             delResult = self.client.kvdelete(key)
