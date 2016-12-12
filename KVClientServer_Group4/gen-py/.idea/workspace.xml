@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7cd64985-8ca0-4b30-a2b7-9c4d7f036d58" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/consistency_test.sh" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/checker.py" afterPath="$PROJECT_DIR$/checker.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/consistency_test.py" afterPath="$PROJECT_DIR$/consistency_test.py" />
     </list>
     <ignored path="gen-py.iws" />

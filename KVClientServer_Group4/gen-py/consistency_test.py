@@ -37,8 +37,9 @@ def main(argv):
     print("starting checker\n")
     checkerthread = threading.Thread(checker.main())
     checkerthread.start()
-    print(stop - start)
 
+    stop = time.time()
+    print(stop - start)
 
 if __name__ == "__main__":
     try:
