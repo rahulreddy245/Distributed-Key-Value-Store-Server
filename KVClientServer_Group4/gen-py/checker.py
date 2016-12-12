@@ -151,8 +151,13 @@ def main():
     print("Hybrid eges done")
     print (DG.number_of_edges())
 
-    print(list(nx.simple_cycles(DG)))
+    cyclelist = list(nx.simple_cycles(DG))
 
+    if not cyclelist:
+        print "no cycles"
+    else:
+        print(cyclelist)
+        exit(1)
     #print (len(writeop)+len(readop))
     #nx.draw(DG)
     #plt.show()
