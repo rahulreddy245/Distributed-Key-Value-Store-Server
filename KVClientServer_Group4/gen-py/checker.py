@@ -1,6 +1,6 @@
 import networkx as nx
 import time
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import sys
 
 
@@ -127,13 +127,13 @@ def main(argv):
                 e = "W:{0}".format(i)
                 if e in writeop:
                     if pathexists(DG, e, r):
-                        print("this works")
-                        print (wstart, rstart, e)
+                        #print("this works")
+                        #print (wstart, rstart, e)
                         #get value from the readop edge
                         #value = readop[r]
 
                         if value in valueDict.keys():
-                            print("Hybrid")
+                            #print("Hybrid")
                             tempseqstart = valueDict[value][0]
                             edgestart = 'W:{0}'.format(str(tempseqstart))
                             if DG.has_node(edgestart):
@@ -142,9 +142,9 @@ def main(argv):
     print(list(nx.simple_cycles(DG)))
     print (DG.number_of_edges())
 
-#    print (len(writeop)+len(readop))
-    nx.draw(DG)
-    plt.show()
+    #print (len(writeop)+len(readop))
+    #nx.draw(DG)
+    #plt.show()
 
 if __name__ == "__main__":
     try:

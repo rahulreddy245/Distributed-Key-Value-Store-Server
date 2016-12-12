@@ -107,6 +107,7 @@ class kvclient():
         # print ("inside worker")
         while (1):
             self.seqstart = self.sequenceClient.get()
+
             #print ("inside while worker:%d"% (seqstart))
             opcode = random.randint(0, 1)
             if (opcode == 0):
@@ -137,7 +138,7 @@ def usage():
 
 def killer():
     """Killer thread"""
-    time.sleep(2)
+    time.sleep(20)
     os._exit(1)
 
 def main(argv):
@@ -155,7 +156,7 @@ def main(argv):
         sys.exit(err)
 
     kvcConnectingHost = argv[1]
-    numClients = 6
+    numClients = 12
 
     kvclientarray = []
     for i in range(numClients):
