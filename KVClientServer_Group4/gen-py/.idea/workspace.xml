@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7cd64985-8ca0-4b30-a2b7-9c4d7f036d58" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/checker.py" afterPath="$PROJECT_DIR$/checker.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/consistency_test.py" afterPath="$PROJECT_DIR$/consistency_test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/consistency_test.sh" afterPath="$PROJECT_DIR$/consistency_test.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/kvclient.py" afterPath="$PROJECT_DIR$/kvclient.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log.txt" afterPath="$PROJECT_DIR$/log.txt" />
-    </list>
+    <list default="true" id="7cd64985-8ca0-4b30-a2b7-9c4d7f036d58" name="Default" comment="" />
     <ignored path="gen-py.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -97,8 +90,8 @@
       <file leaf-file-name="checker.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/checker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="164" column="14" lean-forward="false" selection-start-line="164" selection-start-column="14" selection-end-line="164" selection-end-column="14" />
+            <state relative-caret-position="-10">
+              <caret line="131" column="14" lean-forward="true" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -996,8 +989,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/checker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="164" column="14" lean-forward="false" selection-start-line="164" selection-start-column="14" selection-end-line="164" selection-end-column="14" />
+        <state relative-caret-position="-10">
+          <caret line="131" column="14" lean-forward="true" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
