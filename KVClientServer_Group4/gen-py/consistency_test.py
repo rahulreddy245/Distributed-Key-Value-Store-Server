@@ -3,7 +3,7 @@
 import sys
 import kvclient
 import kvsequenceserver
-import checker
+
 import threading
 
 def usage():
@@ -23,17 +23,17 @@ def main(argv):
     #seqthread =  threading.Thread(target=kvsequenceserver.main())
     #seqthread.start()
 
-    #print("starting Client\n")
-    #clientthread = threading.Thread(kvclient.main(argv))
-    #clientthread.start()
+    print("starting Client\n")
+    clientthread = threading.Thread(kvclient.main(argv))
+    clientthread.start()
     kvclient.main(argv)
 
+    import checker
+
     #checker.main()
-    #print("starting checker\n")
-    #checkerthread = threading.Thread(checker.main())
-    #checkerthread.start()
-
-
+    print("starting checker\n")
+    checkerthread = threading.Thread(checker.main())
+    checkerthread.start()
 
 
 if __name__ == "__main__":

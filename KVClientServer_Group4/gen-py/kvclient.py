@@ -21,7 +21,7 @@ from thrift.protocol import TBinaryProtocol
 import threading
 import os
 import random
-import checker
+
 from kvsequenceclient import KVSequenceClient
 
 sys.path.append('gen-py')
@@ -181,9 +181,6 @@ def main(argv):
         t.join()
     print('Finish.')
 
-    print("starting checker\n")
-    checkerthread = threading.Thread(checker.main())
-    checkerthread.start()
 
 if __name__ == "__main__":
     try:

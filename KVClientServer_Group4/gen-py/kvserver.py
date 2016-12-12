@@ -14,7 +14,6 @@ import sys
 sys.path.append('gen-py')
 import socket
 import threading
-from thrift import Thrift
 from kvstore import KVStore
 from kvstore.ttypes import ErrorCode, Result
 from thrift.transport import TSocket
