@@ -32,7 +32,7 @@ def pathexists(G,source,target):
     return False  #if it didn't find one, it gets out of the function.
 
 
-def main(argv):
+def main():
 
     for line in FILE:
         try:
@@ -136,7 +136,7 @@ def main(argv):
                             edgestart = 'W:{0}'.format(str(tempseqstart))
                             if DG.has_node(edgestart):
                                 DG.add_edge(e,edgestart)
-
+    print("Hybrid eges done")
     print(list(nx.simple_cycles(DG)))
     print (DG.number_of_edges())
 
@@ -147,7 +147,7 @@ def main(argv):
 if __name__ == "__main__":
     try:
         start = time.time()
-        main(sys.argv)
+        main()
         stop = time.time()
         print(stop - start)
     except Exception as e:

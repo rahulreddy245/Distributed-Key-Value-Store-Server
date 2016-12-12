@@ -146,8 +146,9 @@ def usage():
 
 def main(argv):
     # delete log.txt if present
-    if os.path.isfile("log.txt"):
+    if (os.path.isfile("log.txt")):
         os.remove("log.txt")
+
 
     # parsing command line arguments
     err = 2
@@ -180,7 +181,9 @@ def main(argv):
         t.join()
     print('Finish.')
 
-
+    print("starting checker\n")
+    checkerthread = threading.Thread(checker.main())
+    checkerthread.start()
 
 if __name__ == "__main__":
     try:
