@@ -1,3 +1,4 @@
+#!/usr/bin/python
 '''
 Group Number: 4
 
@@ -11,7 +12,7 @@ Balaji Reddy(bbr234)
 '''
 
 import sys
-sys.path.append('gen-py')
+
 import socket
 import threading
 from kvSequencer import SequenceService
@@ -19,7 +20,9 @@ from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 from thrift.server import TServer
+
 host = socket.gethostname()
+sys.path.append('gen-py')
 
 class kvsequence:
     currentsequence = 0
@@ -35,8 +38,8 @@ class kvsequence:
             return self.result
 
 
-if __name__ == "__main__":
-    try:
+
+def main():
         handler = kvsequence()
         processor = SequenceService.Processor(handler)
         transport = TSocket.TServerSocket(port=10100)
@@ -47,5 +50,10 @@ if __name__ == "__main__":
         server.serve()
         print("Done.")
 
-    except Exception as err:
-        print("Error: %s" %str(err))
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        sys.stderr.write("Error: "+str(e))
+        sys.exit(2)

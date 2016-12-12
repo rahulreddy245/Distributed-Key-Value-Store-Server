@@ -67,12 +67,12 @@ def main(argv):
                     DG.add_edge(edgestart, nodestruct)
                 else:
                     print("Something wrong!")
+                    exit(1)
             else:
                 if value ==0:
                     continue
                 outoforderreads.append(line)
                 #exit(1)
-                continue
 
     # we caught the seemingly out of order entries from the log above
     # We process them now as the concurrent writes would have been taken care
@@ -92,12 +92,10 @@ def main(argv):
                 DG.add_edge(edgestart, nodestruct)
             else:
                 print("Something wrong!")
+                exit(1)
         else:
-            if value == 0:
-                continue
-            print("Failing because of :" + str(value))
-            # exit(1)
-            continue
+            #print("Failing because of :" + str(value))
+            exit(1)
 
     seqStartList.sort()
 
