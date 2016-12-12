@@ -1,6 +1,5 @@
 import networkx as nx
 import time
-#import matplotlib.pyplot as plt
 import sys
 
 
@@ -43,8 +42,9 @@ def main():
         opcode = int(opcode)
         value = int(value)
         seqStop = int(seqStop)
-        opDict[seqStop] = [seqStart, opcode, value]
+
         if opcode == 0:
+            opDict[seqStop] = [seqStart, opcode, value]
             seqStartList.append((seqStart, "W"))
             valueDict[value] = [seqStart, seqStop]
             nodestruct = 'W:{0}'.format(str(seqStart))
@@ -58,6 +58,7 @@ def main():
                 tempseqstart = valueDict[value][0]
                 edgestart = 'W:{0}'.format(str(tempseqstart))
                 if DG.has_node(edgestart):
+                    opDict[seqStop] = [seqStart, opcode, value]
                     nodestruct = 'R:{0}'.format(str(seqStart))
 
                     seqStartList.append((seqStart, "R"))
@@ -78,23 +79,34 @@ def main():
     # We process them now as the concurrent writes would have been taken care
     # So they pose no problem
     for line in outoforderreads:
+        try:
+            print("reparsing")
+            seqStart, opcode, value, seqStop = line.split(",")
+        except:
+            pass
+        seqStart = int(seqStart)
+        opcode = int(opcode)
+        value = int(value)
+        seqStop = int(seqStop)
         if value in valueDict.keys():
-
             tempseqstart = valueDict[value][0]
+            if tempseqstart > seqStop:
+                print("it is not a concurrent read it is wrong:"+ str(value))
+                exit(1)
+
             edgestart = 'W:{0}'.format(str(tempseqstart))
             if DG.has_node(edgestart):
+                opDict[seqStop] = [seqStart, opcode, value]
                 nodestruct = 'R:{0}'.format(str(seqStart))
-
                 seqStartList.append((seqStart, "R"))
                 readop[nodestruct] = value
-
                 DG.add_node(nodestruct)
                 DG.add_edge(edgestart, nodestruct)
             else:
                 print("Something wrong!")
                 exit(1)
         else:
-            #print("Failing because of :" + str(value))
+            print("Failing because of :" + str(value))
             exit(1)
 
     seqStartList.sort()
@@ -137,8 +149,9 @@ def main():
                             if DG.has_node(edgestart):
                                 DG.add_edge(e,edgestart)
     print("Hybrid eges done")
-    print(list(nx.simple_cycles(DG)))
     print (DG.number_of_edges())
+
+    print(list(nx.simple_cycles(DG)))
 
     #print (len(writeop)+len(readop))
     #nx.draw(DG)
