@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-terminal -e python kvsequenceserver.py
+python consistency_test.py -server $2
 

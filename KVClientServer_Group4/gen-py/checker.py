@@ -80,7 +80,7 @@ def main():
     # So they pose no problem
     for line in outoforderreads:
         try:
-            print("reparsing")
+            print("reparsing:"+str(value))
             seqStart, opcode, value, seqStop = line.split(",")
         except:
             pass
@@ -158,10 +158,11 @@ def main():
     else:
         print(cyclelist)
         exit(1)
+
     #print (len(writeop)+len(readop))
     #nx.draw(DG)
     #plt.show()
-
+    print("done with checking")
 if __name__ == "__main__":
     try:
         start = time.time()

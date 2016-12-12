@@ -2,8 +2,7 @@
 
 import sys
 import kvclient
-import kvsequenceserver
-
+import subprocess
 import threading
 
 def usage():
@@ -22,11 +21,14 @@ def main(argv):
     #print("starting sequence server\n")
     #seqthread =  threading.Thread(target=kvsequenceserver.main())
     #seqthread.start()
+    pro = subprocess.Popen([sys.executable, 'kvsequenceserver.py'], creationflags=subprocess.CREATE_NEW_CONSOLE)
 
     print("starting Client\n")
     clientthread = threading.Thread(kvclient.main(argv))
     clientthread.start()
-    kvclient.main(argv)
+
+    #os.kill(pro.pid, signal.CTRL_BREAK_EVENT)
+    subprocess.call(['taskkill', '/F', '/T', '/PID', str(pro.pid)])
 
     import checker
 
@@ -34,6 +36,7 @@ def main(argv):
     print("starting checker\n")
     checkerthread = threading.Thread(checker.main())
     checkerthread.start()
+
 
 
 if __name__ == "__main__":

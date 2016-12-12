@@ -130,7 +130,7 @@ class kvclient():
                 f.write(str(self.seqstart) + "," + str(self.opcode) + "," + str(self.seq) + "," + str(self.seqend) + "\n")
 
             threadlock.release()
-            if self.seq > self.seqlimit:
+            if self.seqend > self.seqlimit:
                 print("  Exiting Thread.\n")
                 break
 
