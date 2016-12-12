@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7cd64985-8ca0-4b30-a2b7-9c4d7f036d58" name="Default" comment="" />
+    <list default="true" id="7cd64985-8ca0-4b30-a2b7-9c4d7f036d58" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/consistency_test.sh" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/checker.py" afterPath="$PROJECT_DIR$/checker.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/consistency_test.py" afterPath="$PROJECT_DIR$/consistency_test.py" />
+    </list>
     <ignored path="gen-py.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,31 +72,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="consistency_test.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="consistency_test.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/consistency_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-              <folding />
+            <state relative-caret-position="439">
+              <caret line="47" column="36" lean-forward="true" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
+              <folding>
+                <element signature="e#19#29#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="consistency_test.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/consistency_test.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="37" lean-forward="false" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="checker.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="checker.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/checker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-10">
-              <caret line="131" column="14" lean-forward="true" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
+            <state relative-caret-position="286">
+              <caret line="166" column="8" lean-forward="false" selection-start-line="166" selection-start-column="8" selection-end-line="167" selection-end-column="27" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -143,10 +140,10 @@
         <option value="$PROJECT_DIR$/kvserver.py" />
         <option value="$PROJECT_DIR$/kvsequenceclient.py" />
         <option value="$PROJECT_DIR$/kvclient.py" />
-        <option value="$PROJECT_DIR$/consistency_test.py" />
         <option value="$PROJECT_DIR$/consistency_test.sh" />
         <option value="$PROJECT_DIR$/log.txt" />
         <option value="$PROJECT_DIR$/checker.py" />
+        <option value="$PROJECT_DIR$/consistency_test.py" />
       </list>
     </option>
   </component>
@@ -961,14 +958,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/consistency_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/kvclient.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -989,10 +978,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/checker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10">
-          <caret line="131" column="14" lean-forward="true" selection-start-line="131" selection-start-column="14" selection-end-line="131" selection-end-column="14" />
+        <state relative-caret-position="286">
+          <caret line="166" column="8" lean-forward="false" selection-start-line="166" selection-start-column="8" selection-end-line="167" selection-end-column="27" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/consistency_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="47" column="36" lean-forward="true" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
+          <folding>
+            <element signature="e#19#29#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -159,9 +159,6 @@ def main():
         print(cyclelist)
         exit(1)
 
-    #print (len(writeop)+len(readop))
-    #nx.draw(DG)
-    #plt.show()
     print("done with checking")
 if __name__ == "__main__":
     try:

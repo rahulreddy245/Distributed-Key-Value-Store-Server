@@ -4,12 +4,13 @@ import sys
 import kvclient
 import subprocess
 import threading
+import time
 
 def usage():
     print ("Correct usage: kvclient -server host:port")
 
 def main(argv):
-
+    start = time.time()
     # parsing command line arguments
     err = 2
     if argv[0] != "-server":
@@ -36,7 +37,7 @@ def main(argv):
     print("starting checker\n")
     checkerthread = threading.Thread(checker.main())
     checkerthread.start()
-
+    print(stop - start)
 
 
 if __name__ == "__main__":
