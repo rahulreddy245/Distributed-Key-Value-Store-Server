@@ -44,7 +44,7 @@ class KVSequenceClient():
         result = 0
         #print("inside get")
         result = self.client.getnextsequenceid()
-        print("got the sequence id :%d" %(result))
+        # print("got the sequence id :%d" %(result))
         return result
 
 

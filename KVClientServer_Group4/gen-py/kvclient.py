@@ -21,11 +21,13 @@ from thrift.protocol import TBinaryProtocol
 import threading
 import os
 import random
-
+import itertools
 from kvsequenceclient import KVSequenceClient
 
 sys.path.append('gen-py')
 host = socket.gethostname()
+threadlock = threading.Lock()
+cont = itertools.count()
 
 
 class kvclient():
@@ -34,7 +36,8 @@ class kvclient():
         self.seqstart = 0
         self.seqend = 0
         self.seq = 0
-        self.seqlimit = 25000
+        self.seqlimit = 8000
+        self.opcode = 2
 
         # Key value on which the project is run
         self.key = 'DS:'
@@ -66,7 +69,7 @@ class kvclient():
         try:
             setresult = self.client.kvset(key, value)
             if setresult.error == ErrorCode.kSuccess:
-                print ("Key: %s Value: %s, successfully stored" % (key, value))
+                print ("Key: %s Value: %s, successfully stored\n" % (key, value))
                 # sys.exit(setResult.error) #exitCode
             else:
                 sys.stderr.write("Set Error: "+setresult.errortext)
@@ -79,7 +82,7 @@ class kvclient():
         try:
             getresult = self.client.kvget(key)
             if getresult.error == ErrorCode.kSuccess:
-                print ("Key: {1} Value: {0}, successfully retrieved".format(getresult.value, key))
+                print ("Key: {1} Value: {0}, successfully retrieved\n".format(getresult.value, key))
                 return getresult.value
                 # sys.exit(getResult.error)
             else:
@@ -108,26 +111,26 @@ class kvclient():
             self.seqstart = self.sequenceClient.get()
 
             # print ("inside while worker:%d"% (seqstart))
-            opcode = random.randint(0, 1)
-            if opcode == 0:
-                self.seq = str(self.seqstart + 1)
+            self.opcode = random.randint(0, 1)
+            if self.opcode == 0:
+                self.seq = str( cont.next())
                 # with self.lock:
                 self.set(self.key, self.seq)
-            else:
+            elif self.opcode ==1:
                 self.seq = self.get(self.key)
             self.seqend = self.sequenceClient.get()
             # print ("inside while worker:%d" %(seqend))
 
-            self.lock.acquire(True)
-            f = open("log.txt", 'a')
+            threadlock.acquire(True)
+            with open("log.txt", 'a',0) as f:
 
-            # Writing sequence start and end numbers, opcode and value set/retrieved.
-            # Could change opcode with string "S" and "G" if needed.
-            # if (self.seq != None):
-            f.write(str(self.seqstart) + "," + str(opcode) + "," + str(self.seq) + "," + str(self.seqend) + "\n")
-            f.close()
-            self.lock.release()
-            if self.seqend > self.seqlimit:
+                # Writing sequence start and end numbers, opcode and value set/retrieved.
+                # Could change opcode with string "S" and "G" if needed.
+                # if (self.seq != None):
+                f.write(str(self.seqstart) + "," + str(self.opcode) + "," + str(self.seq) + "," + str(self.seqend) + "\n")
+
+            threadlock.release()
+            if self.seq > self.seqlimit:
                 print("  Exiting Thread.\n")
                 break
 
