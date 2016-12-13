@@ -1,6 +1,14 @@
 -------------------------------------------------
 README : Consistent Key-Value Store
 -------------------------------------------------
+---------------
+GROUP MEMBERS
+---------------
+Group # 4
+Rahul Reddy (rra304@nyu.edu)
+Suraj Patel (skp392@nyu.edu)
+Jubin Soni (jas1464@nyu.edu)
+Balaji Reddy (bbr234@nyu.edu)
 
 ------------
 INTRODUCTION
