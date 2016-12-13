@@ -19,17 +19,17 @@ def main(argv):
     if argv.__len__() != 2:
         usage()
         sys.exit(err)
-    #print("starting sequence server\n")
-    #seqthread =  threading.Thread(target=kvsequenceserver.main())
-    #seqthread.start()
-    pro = subprocess.Popen([sys.executable, 'kvsequenceserver.py'], creationflags=subprocess.CREATE_NEW_CONSOLE)
+
+    if sys.platform == 'win32':
+        pro = subprocess.Popen([sys.executable, 'kvsequenceserver.py'], creationflags=subprocess.CREATE_NEW_CONSOLE)
 
     print("starting Client\n")
     clientthread = threading.Thread(kvclient.main(argv))
     clientthread.start()
 
     #os.kill(pro.pid, signal.CTRL_BREAK_EVENT)
-    subprocess.call(['taskkill', '/F', '/T', '/PID', str(pro.pid)])
+    if sys.platform == 'win32':
+        subprocess.call(['taskkill', '/F', '/T', '/PID', str(pro.pid)])
 
     import checker
 
